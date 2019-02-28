@@ -1,12 +1,13 @@
-#   Objetivo:  Abre um poster de um filme.
+# Objetivo:  Abre um poster de um filme.
 #
-#   O script usa duas API'S. Uma de tradução e outra de filmes.
+# O script usa duas API'S. Uma de tradução e outra de filmes.
 #
-#   A API de tradução é a MyMemory: https://mymemory.translated.net/doc/spec.php. Não é completa, é uma API simples e a      #   tradução não é tão eficiente, digo isso porque as vezes o filme não é encontrado justamente pela ineficácia da tradução.
+# A API de tradução é a MyMemory: https://mymemory.translated.net/doc/spec.php. Não é completa, é uma API simples e a      
+# tradução não é tão eficiente, digo isso porque as vezes o filme não é encontrado justamente pela ineficácia da tradução.
 #
-#   A API de filmes é a OMDb, muito simples também: http://www.omdbapi.com/
+# A API de filmes é a OMDb, muito simples também: http://www.omdbapi.com/
 #
-#  author: Lucas Henrique
+#author: Lucas Henrique
 
 
 import requests
