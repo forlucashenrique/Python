@@ -13,7 +13,6 @@ import requests
 import json
 import webbrowser
 
-
 class ApiOMDb:
     """
         OMDb é uma API de filmes. A classe busca por um filme pelo seu título em inglês.
@@ -22,10 +21,22 @@ class ApiOMDb:
     def __init__(self, titulo_filme):
         self.apikey = '3afcdc92'
         self.url = f'http://www.omdbapi.com/?apikey={self.apikey}&t={titulo_filme}'
-        self.json = requests.get(self.url)
-        self.dados = json.loads(self.json.content)
-        self.poster = self.dados['Poster'] 
-    
+        self.dados = self.__req()
+        self.poster = self.dados['Poster']
+
+    def __req(self):
+        try:
+            req = requests.get(self.url)
+        except:
+            print('Erro na requisição.')
+            raise SystemExit 
+            
+        req = json.loads(req.content)
+        if req['Response'] == 'False':
+            print('Filme não encontrado!')
+            raise SystemExit
+        return req
+
     def __str__(self):
         self.title = traduzir_titulo(self.dados['Title'], 'en')
         return self.title
@@ -41,12 +52,15 @@ def traduzir_titulo(titulo, idioma_de_origem):
 
         return: título do filme traduzido para o idioma de destino. Ou Português(pt-br) ou Inglês(en)
     """
-    if idioma_de_origem == 'pt-br':
-        url = f'https://api.mymemory.translated.net/get?q={titulo}&langpair={idioma_de_origem}|en'
-        req = requests.get(url)
-    else:
-        url = f'https://api.mymemory.translated.net/get?q={titulo}&type=series&langpair={idioma_de_origem}|pt-br'
-        req = requests.get(url)
+    try:
+        if idioma_de_origem == 'pt-br':
+            url = f'https://api.mymemory.translated.net/get?q={titulo}&langpair={idioma_de_origem}|en'
+            req = requests.get(url)
+        else:
+            url = f'https://api.mymemory.translated.net/get?q={titulo}&type=series&langpair={idioma_de_origem}|pt-br'
+            req = requests.get(url)
+    except:
+        raise Exception('Erro de tradução.')
 
     dados = json.loads(req.content)
     titulo_traduzido = dados['responseData']['translatedText']
